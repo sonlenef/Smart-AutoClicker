@@ -224,6 +224,10 @@ class SmartAutoClickerService : AccessibilityService(), AndroidExecutor {
         }
     }
 
+    override suspend fun executeFillText(text: String) {
+//        TODO("Not yet implemented")
+    }
+
     override fun executeStartActivity(intent: Intent) {
         try {
             startActivity(intent)

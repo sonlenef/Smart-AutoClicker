@@ -23,6 +23,9 @@
     <string name="default_click_name">Click</string>
     <integer name="default_click_press_duration">1</integer>
 
+    <string name="default_click_fill_text" translatable="false">Fill text</string>
+    <integer name="default_fill_text_pause_duration">1000</integer>
+
     <string name="default_swipe_name">Swipe</string>
     <integer name="default_swipe_duration">500</integer>
 

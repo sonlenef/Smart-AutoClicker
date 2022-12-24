@@ -39,6 +39,7 @@ import com.buzbuz.smartautoclicker.overlays.config.action.intent.IntentDialog
 import com.buzbuz.smartautoclicker.overlays.config.action.pause.PauseDialog
 import com.buzbuz.smartautoclicker.overlays.config.action.swipe.SwipeDialog
 import com.buzbuz.smartautoclicker.overlays.base.dialog.MultiChoiceDialog
+import com.buzbuz.smartautoclicker.overlays.config.action.fillText.FillTextDialog
 import com.buzbuz.smartautoclicker.overlays.config.event.EventDialogViewModel
 
 import kotlinx.coroutines.launch
@@ -124,6 +125,7 @@ class ActionsContent : NavBarDialogContent() {
             dialogTitleText = R.string.dialog_overlay_title_action_type,
             choices = listOf(
                 ActionTypeChoice.Click,
+                ActionTypeChoice.FillText,
                 ActionTypeChoice.Swipe,
                 ActionTypeChoice.Pause,
                 ActionTypeChoice.Intent,
@@ -152,6 +154,10 @@ class ActionsContent : NavBarDialogContent() {
         val overlay = when (action) {
             is Action.Click -> ClickDialog(context, action, viewModel::removeAction) { savedClick ->
                 viewModel.addUpdateAction(savedClick, index)
+            }
+
+            is Action.FillText -> FillTextDialog(context, action, viewModel::removeAction) { savedFillText ->
+                viewModel.addUpdateAction(savedFillText, index)
             }
 
             is Action.Swipe -> SwipeDialog(context, action, viewModel::removeAction) { savedSwipe ->

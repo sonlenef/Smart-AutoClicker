@@ -30,24 +30,16 @@
                 android:layout_marginBottom="@dimen/margin_vertical_small"/>
 
             <include layout="@layout/include_input_field_text"
-                android:id="@+id/edit_press_duration_layout"
+                android:id="@+id/edit_pause_duration_layout"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dropdown_one_line_helper_text_height"
                 android:layout_marginBottom="@dimen/margin_vertical_small"/>
 
-            <include layout="@layout/include_input_field_dropdown"
-                android:id="@+id/click_position_field"
+            <include layout="@layout/include_input_field_text"
+                android:id="@+id/edit_text_layout"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dropdown_one_line_helper_text_height"
-                android:layout_marginBottom="@dimen/margin_vertical_large"/>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/on_position_select_button"
-                style="@style/Widget.Material3.Button.TonalButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="@string/button_text_click_position_select"/>
+                android:layout_marginBottom="@dimen/margin_vertical_small"/>
 
         </LinearLayout>
 

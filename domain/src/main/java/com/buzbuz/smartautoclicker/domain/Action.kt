@@ -91,6 +91,39 @@ sealed class Action {
         override fun deepCopy(): Click = copy(name = "" + name)
     }
 
+    data class FillText(
+        override var id: Long = 0,
+        override var eventId: Long,
+        override var name: String? = null,
+        val text: String = "",
+        val pauseDuration: Long? = null
+    ): Action() {
+        override fun isComplete(): Boolean = super.isComplete() && pauseDuration != null && text.isNotEmpty()
+
+        override fun toEntity(): CompleteActionEntity {
+            if (!isComplete()) throw IllegalStateException("Can't transform to entity, Fill text is incomplete.")
+
+            return CompleteActionEntity(
+                action = ActionEntity(
+                    id = id,
+                    eventId = eventId,
+                    name = name!!,
+                    type = ActionType.FILLTEXT,
+                    text = text,
+                    pauseDuration = pauseDuration,
+                ),
+                intentExtras = emptyList()
+            )
+        }
+
+        override fun cleanUpIds() {
+            id = 0
+            eventId = 0
+        }
+
+        override fun deepCopy(): FillText = copy(name = "" + name)
+    }
+
     /**
      * Swipe action.
      *
@@ -307,6 +340,14 @@ internal fun CompleteActionEntity.toAction(): Action {
         ActionType.CLICK -> Action.Click(
             action.id, action.eventId, action.name, action.pressDuration!!,
             action.x, action.y, action.clickOnCondition!!
+        )
+
+        ActionType.FILLTEXT -> Action.FillText(
+            action.id,
+            action.eventId,
+            action.name,
+            action.text,
+            action.pauseDuration
         )
 
         ActionType.SWIPE -> Action.Swipe(

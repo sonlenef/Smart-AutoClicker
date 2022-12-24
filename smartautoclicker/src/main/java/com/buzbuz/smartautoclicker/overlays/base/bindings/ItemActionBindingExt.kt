@@ -72,6 +72,13 @@ fun Action.toActionDetails(context: Context): ActionDetails {
             action = this,
         )
 
+        is Action.FillText -> ActionDetails(
+            icon = R.drawable.ic_click,
+            name = name!!,
+            details = "Auto fill '$text'",
+            action = this
+        )
+
         is Action.Swipe -> ActionDetails(
             icon = R.drawable.ic_swipe,
             name = name!!,

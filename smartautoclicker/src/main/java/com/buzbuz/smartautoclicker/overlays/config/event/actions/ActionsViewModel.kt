@@ -30,10 +30,7 @@ import com.buzbuz.smartautoclicker.extensions.mapList
 import com.buzbuz.smartautoclicker.overlays.base.dialog.DialogChoice
 import com.buzbuz.smartautoclicker.overlays.base.bindings.ActionDetails
 import com.buzbuz.smartautoclicker.overlays.base.bindings.toActionDetails
-import com.buzbuz.smartautoclicker.overlays.base.utils.newDefaultClick
-import com.buzbuz.smartautoclicker.overlays.base.utils.newDefaultIntent
-import com.buzbuz.smartautoclicker.overlays.base.utils.newDefaultPause
-import com.buzbuz.smartautoclicker.overlays.base.utils.newDefaultSwipe
+import com.buzbuz.smartautoclicker.overlays.base.utils.*
 
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -83,14 +80,13 @@ class ActionsViewModel(application: Application) : AndroidViewModel(application)
      */
     fun createAction(context: Context, actionType: ActionTypeChoice): Action {
         configuredEvent.value?.let { event ->
-
             return when (actionType) {
                 is ActionTypeChoice.Click -> newDefaultClick(context, event.id)
+                is ActionTypeChoice.FillText -> newDefaultFillText(context, event.id)
                 is ActionTypeChoice.Swipe -> newDefaultSwipe(context, event.id)
                 is ActionTypeChoice.Pause -> newDefaultPause(context, event.id)
                 is ActionTypeChoice.Intent -> newDefaultIntent(context, event.id)
             }
-
         } ?: throw IllegalStateException("Can't create an action, event is null!")
     }
 
@@ -164,6 +160,12 @@ sealed class ActionTypeChoice(title: Int, description: Int, iconId: Int?): Dialo
     object Click : ActionTypeChoice(
         R.string.item_title_click,
         R.string.item_desc_click,
+        R.drawable.ic_click,
+    )
+    /** Fill text Action choice. */
+    object FillText : ActionTypeChoice(
+        R.string.item_title_fill_text,
+        R.string.item_desc_fill_text,
         R.drawable.ic_click,
     )
     /** Swipe Action choice. */

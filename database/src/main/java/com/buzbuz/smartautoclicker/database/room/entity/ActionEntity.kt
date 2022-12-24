@@ -88,6 +88,9 @@ data class ActionEntity(
     @ColumnInfo(name = "type") val type: ActionType,
 
     // ActionType.CLICK
+    @ColumnInfo(name = "text", defaultValue = "") val text: String = "",
+
+    // ActionType.CLICK
     @ColumnInfo(name = "x") val x: Int? = null,
     @ColumnInfo(name = "y") val y: Int? = null,
     @ColumnInfo(name = "clickOnCondition") val clickOnCondition: Boolean? = null,
@@ -125,6 +128,10 @@ data class ActionEntity(
 enum class ActionType {
     /** A single tap on the screen. */
     CLICK,
+
+    /** A fill text action **/
+    FILLTEXT,
+
     /** A swipe on the screen. */
     SWIPE,
     /** A pause, waiting before the next action. */

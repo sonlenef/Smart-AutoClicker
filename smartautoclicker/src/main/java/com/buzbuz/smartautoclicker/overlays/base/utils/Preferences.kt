@@ -38,6 +38,13 @@ fun SharedPreferences.getClickPressDurationConfig(context: Context) : Long = get
 fun SharedPreferences.Editor.putClickPressDurationConfig(durationMs: Long) : SharedPreferences.Editor =
     putLong(PREF_LAST_CLICK_PRESS_DURATION, durationMs)
 
+/** @return the default duration for a pause of fill text. */
+fun SharedPreferences.getFillTextPauseDurationConfig(context: Context) : Long = getLong(
+    PREF_LAST_PAUSE_FILL_TEXT_DURATION,
+    context.resources.getInteger(R.integer.default_fill_text_pause_duration).toLong()
+)
+
+
 /** @return the default duration for a swipe. */
 fun SharedPreferences.getSwipeDurationConfig(context: Context) : Long = getLong(
     PREF_LAST_SWIPE_DURATION,
@@ -99,6 +106,7 @@ fun SharedPreferences.Editor.putIsDebugReportEnabled(enabled: Boolean) : SharedP
 private const val EVENT_CONFIG_PREFERENCES_NAME = "EventConfigPreferences"
 /** User last click press duration key in the SharedPreferences. */
 private const val PREF_LAST_CLICK_PRESS_DURATION = "Last_Click_Press_Duration"
+private const val PREF_LAST_PAUSE_FILL_TEXT_DURATION = "Last_Pause_Fill_text_Duration"
 /** User last swipe press duration key in the SharedPreferences. */
 private const val PREF_LAST_SWIPE_DURATION = "Last_Swipe_Duration"
 /** User last pause press duration key in the SharedPreferences. */

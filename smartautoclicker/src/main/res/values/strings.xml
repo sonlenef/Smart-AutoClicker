@@ -45,6 +45,7 @@
     <string name="dialog_overlay_title_action_type">Action type</string>
     <string name="dialog_overlay_title_application_selection">Select an application</string>
     <string name="dialog_overlay_title_click">Click</string>
+    <string name="dialog_overlay_title_fill_text">Fill text</string>
     <string name="dialog_overlay_title_condition_config">Condition</string>
     <string name="dialog_overlay_title_copy_from">Copy from</string>
     <string name="dialog_overlay_title_debug_report">Debug report</string>
@@ -79,6 +80,7 @@
       -  * Desc can have more space to describe the title
       -->
     <string name="item_desc_click">Click somewhere on the screen</string>
+    <string name="item_desc_fill_text" translatable="false">Fill text somewhere on the screen</string>
     <string name="item_desc_click_details">During %1$s at [%2$d, %3$d]</string>
     <string name="item_desc_click_position_on_condition">On condition</string>
     <string name="item_desc_click_on_position">Click on %1$d, %2$d</string>
@@ -99,6 +101,7 @@
     <string name="item_title_backup_create_select_file">Select output file</string>
     <string name="item_title_backup_import_select_file">Select backup file</string>
     <string name="item_title_click">Click</string>
+    <string name="item_title_fill_text" translatable="false">Fill text</string>
     <string name="item_title_debug_generate_report">Generate a report</string>
     <string name="item_title_debug_show_view">Show debug view</string>
     <string name="item_title_intent">Intent</string>
@@ -215,6 +218,7 @@
       - Should be short and concise.
       -->
     <string name="input_field_label_name">Name</string>
+    <string name="input_field_label_text" translatable="false">Text</string>
     <string name="input_field_label_click_press_duration">Press duration (ms)</string>
     <string name="input_field_label_execution_count">Executions</string>
     <string name="input_field_label_intent_extra_key">Key</string>

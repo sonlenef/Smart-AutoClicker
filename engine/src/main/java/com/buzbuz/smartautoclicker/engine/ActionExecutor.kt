@@ -24,6 +24,7 @@ import android.util.Log
 
 import com.buzbuz.smartautoclicker.domain.Action
 import com.buzbuz.smartautoclicker.domain.Action.Click
+import com.buzbuz.smartautoclicker.domain.Action.FillText
 import com.buzbuz.smartautoclicker.domain.Action.Pause
 import com.buzbuz.smartautoclicker.domain.Action.Swipe
 import com.buzbuz.smartautoclicker.domain.Action.ToggleEvent
@@ -59,6 +60,7 @@ internal class ActionExecutor(
         actions.forEach { action ->
             when (action) {
                 is Click -> executeClick(action, conditionPosition)
+                is FillText -> executeFillText(action)
                 is Swipe -> executeSwipe(action)
                 is Pause -> executePause(action)
                 is Action.Intent -> executeIntent(action)
@@ -97,6 +99,20 @@ internal class ActionExecutor(
             androidExecutor.executeGesture(clickBuilder.build())
         }
     }
+    /**
+     * Execute the provided click.
+     * @param fillText the fill text action to be executed.
+     */
+    private suspend fun executeFillText(fillText: FillText) {
+        if (fillText.text.isNotEmpty()) {
+            delay(if (randomize) random.getRandomizedDuration(fillText.pauseDuration!!) else fillText.pauseDuration!!)
+
+            withContext(Dispatchers.Main) {
+                androidExecutor.executeFillText(fillText.text)
+            }
+        }
+    }
+
 
     /**
      * Execute the provided swipe.
@@ -192,6 +208,9 @@ interface AndroidExecutor {
 
     /** Execute the provided gesture. */
     suspend fun executeGesture(gestureDescription: GestureDescription)
+
+    /** Execute the provided gesture. */
+    suspend fun executeFillText(text: String)
 
     /** Start the activity defined by the provided intent. */
     fun executeStartActivity(intent: Intent)

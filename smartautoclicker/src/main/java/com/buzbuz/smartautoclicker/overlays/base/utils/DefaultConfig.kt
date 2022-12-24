@@ -84,6 +84,18 @@ fun newDefaultClick(context: Context, eventId: Long) = Action.Click(
 )
 
 /**
+ * Creates a new default click action.
+ * @param context the Android context.
+ * @param eventId the event for this new action.
+ * @return the new fill text action.
+ */
+fun newDefaultFillText(context: Context, eventId: Long) = Action.FillText(
+    eventId = eventId,
+    name = context.getString(R.string.default_click_fill_text),
+    pauseDuration = context.getEventConfigPreferences().getFillTextPauseDurationConfig(context),
+)
+
+/**
  * Creates a new default swipe action.
  * @param context the Android context.
  * @param eventId the event for this new action.

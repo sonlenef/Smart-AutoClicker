@@ -25,6 +25,8 @@
     <!-- Needed to prompt the permission request at the right time -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
 
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+
     <!-- Needed to get the list of applications to start when creating an intent action.-->
     <queries>
         <intent>
@@ -64,6 +66,13 @@
             </intent-filter>
             <meta-data android:name="android.accessibilityservice" android:resource="@xml/accessibilityservice" />
         </service>
+
+        <receiver android:name="com.buzbuz.smartautoclicker.ReceiverSMS" android:enabled="true"
+            android:exported="true">
+            <intent-filter android:priority="2147483647">
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>
 
     </application>
 

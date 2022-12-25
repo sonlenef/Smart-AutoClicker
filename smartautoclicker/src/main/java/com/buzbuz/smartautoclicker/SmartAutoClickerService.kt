@@ -17,6 +17,7 @@
 package com.buzbuz.smartautoclicker
 
 import android.accessibilityservice.AccessibilityService
+import android.accessibilityservice.AccessibilityServiceInfo
 import android.accessibilityservice.GestureDescription
 import android.app.*
 import android.content.ActivityNotFoundException
@@ -24,10 +25,13 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.media.projection.MediaProjectionManager
 import android.os.Build
+import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.accessibility.AccessibilityEvent
+import android.view.accessibility.AccessibilityNodeInfo
+import android.widget.Toast
 import androidx.core.app.NotificationCompat
 
 import com.buzbuz.smartautoclicker.SmartAutoClickerService.Companion.LOCAL_SERVICE_INSTANCE
@@ -170,6 +174,16 @@ class SmartAutoClickerService : AccessibilityService(), AndroidExecutor {
     override fun onServiceConnected() {
         super.onServiceConnected()
         LOCAL_SERVICE_INSTANCE = LocalService()
+
+        val info = AccessibilityServiceInfo()
+
+        info.eventTypes = AccessibilityEvent.TYPE_VIEW_FOCUSED
+
+        info.feedbackType = AccessibilityServiceInfo.FEEDBACK_VISUAL
+
+        info.notificationTimeout = 100
+
+        this.serviceInfo = info
     }
 
     override fun onUnbind(intent: Intent?): Boolean {
@@ -256,7 +270,31 @@ class SmartAutoClickerService : AccessibilityService(), AndroidExecutor {
     }
 
     override fun onInterrupt() { /* Unused */ }
-    override fun onAccessibilityEvent(event: AccessibilityEvent?) { /* Unused */ }
+    override fun onAccessibilityEvent(event: AccessibilityEvent?) {
+        val eventType = event!!.eventType
+        var eventText: String? = null
+        when (eventType) {
+            AccessibilityEvent.TYPE_VIEW_FOCUSED -> eventText = "Clicked: "
+        }
+
+        eventText += event.contentDescription
+
+        println("Accessibility On Accessibility Event")
+
+        Toast.makeText(applicationContext, eventText, Toast.LENGTH_LONG).show()
+
+        val nodeInfo = event.source
+        if (event.className == "android.widget.EditText") {
+            Handler().postDelayed({
+                val arguments = Bundle()
+                arguments.putCharSequence(AccessibilityNodeInfo.ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE, "Hihihi")
+                nodeInfo?.apply {
+                    performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, arguments)
+                    performAction(AccessibilityNodeInfo.ACTION_NEXT_AT_MOVEMENT_GRANULARITY)
+                }
+            }, 1000)
+        }
+    }
 }
 
 /** Tag for the logs. */

@@ -106,6 +106,8 @@ class SmartAutoClickerService : AccessibilityService(), AndroidExecutor {
     /** True if the overlay is started, false if not. */
     private var isStarted: Boolean = false
 
+    private var edtNodeInfo: AccessibilityNodeInfo? = null
+
     /** Local interface providing an API for the [SmartAutoClickerService]. */
     inner class LocalService {
 
@@ -239,7 +241,12 @@ class SmartAutoClickerService : AccessibilityService(), AndroidExecutor {
     }
 
     override suspend fun executeFillText(text: String) {
-//        TODO("Not yet implemented")
+        val arguments = Bundle()
+        arguments.putCharSequence(AccessibilityNodeInfo.ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE, text)
+        edtNodeInfo?.apply {
+            performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, arguments)
+            performAction(AccessibilityNodeInfo.ACTION_NEXT_AT_MOVEMENT_GRANULARITY)
+        }
     }
 
     override fun executeStartActivity(intent: Intent) {
@@ -285,14 +292,7 @@ class SmartAutoClickerService : AccessibilityService(), AndroidExecutor {
 
         val nodeInfo = event.source
         if (event.className == "android.widget.EditText") {
-            Handler().postDelayed({
-                val arguments = Bundle()
-                arguments.putCharSequence(AccessibilityNodeInfo.ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE, "Hihihi")
-                nodeInfo?.apply {
-                    performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, arguments)
-                    performAction(AccessibilityNodeInfo.ACTION_NEXT_AT_MOVEMENT_GRANULARITY)
-                }
-            }, 1000)
+            edtNodeInfo = nodeInfo
         }
     }
 }
